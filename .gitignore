@@ -1,0 +1,5 @@
+.vercel
+server.log
+server.err.log
+*.png
+edge-profile-*
