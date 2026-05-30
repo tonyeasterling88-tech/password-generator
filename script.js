@@ -16,10 +16,29 @@ const strengthLabel = document.querySelector("#strength-label");
 const strengthNote = document.querySelector("#strength-note");
 const optionInputs = [...document.querySelectorAll(".option-card input")];
 
-function randomIndex(max) {
+function secureRandomUint32() {
+  if (!globalThis.crypto?.getRandomValues) {
+    throw new Error("Secure random generation is not available in this browser.");
+  }
+
   const array = new Uint32Array(1);
   crypto.getRandomValues(array);
-  return array[0] % max;
+  return array[0];
+}
+
+function randomIndex(max) {
+  if (!Number.isInteger(max) || max <= 0 || max > 2 ** 32) {
+    throw new RangeError("randomIndex requires a positive integer below 2^32.");
+  }
+
+  const limit = Math.floor(2 ** 32 / max) * max;
+  let value = secureRandomUint32();
+
+  while (value >= limit) {
+    value = secureRandomUint32();
+  }
+
+  return value % max;
 }
 
 function shuffle(value) {
@@ -90,15 +109,31 @@ function renderStrength(password) {
 }
 
 function refreshPassword() {
-  const password = generatePassword();
-  passwordOutput.textContent = password;
-  lengthValue.textContent = lengthInput.value;
-  copyStatus.textContent = "";
-  renderStrength(password);
+  try {
+    const password = generatePassword();
+    passwordOutput.textContent = password;
+    lengthValue.textContent = lengthInput.value;
+    copyStatus.textContent = "";
+    renderStrength(password);
+  } catch (error) {
+    passwordOutput.textContent = "Secure generation unavailable";
+    copyStatus.textContent = error.message;
+    strengthMeter.className = "strength-meter weak";
+    [...strengthMeter.children].forEach((segment, index) => {
+      segment.classList.toggle("active", index === 0);
+    });
+    strengthLabel.textContent = "Unavailable";
+    strengthNote.textContent = "Use a modern browser with secure randomness.";
+  }
 }
 
 async function copyPassword() {
   const password = passwordOutput.textContent;
+
+  if (!password || password === "Secure generation unavailable") {
+    copyStatus.textContent = "Generate a password before copying.";
+    return;
+  }
 
   try {
     await navigator.clipboard.writeText(password);
