@@ -2,7 +2,7 @@ const characterSets = {
   uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
   lowercase: "abcdefghijklmnopqrstuvwxyz",
   numbers: "0123456789",
-  symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
+  symbols: "!@#$%^&*()",
 };
 
 const passwordOutput = document.querySelector("#password-output");
@@ -58,6 +58,15 @@ function selectedSets() {
     .map((input) => characterSets[input.id]);
 }
 
+function detectedSetCount(password) {
+  return [
+    /[A-Z]/.test(password),
+    /[a-z]/.test(password),
+    /\d/.test(password),
+    /[^A-Za-z0-9]/.test(password),
+  ].filter(Boolean).length;
+}
+
 function generatePassword() {
   const sets = selectedSets();
 
@@ -78,7 +87,7 @@ function generatePassword() {
 }
 
 function scorePassword(password) {
-  const variety = selectedSets().length;
+  const variety = detectedSetCount(password);
   const length = password.length;
   let score = 0;
 
@@ -111,12 +120,12 @@ function renderStrength(password) {
 function refreshPassword() {
   try {
     const password = generatePassword();
-    passwordOutput.textContent = password;
+    passwordOutput.value = password;
     lengthValue.textContent = lengthInput.value;
     copyStatus.textContent = "";
     renderStrength(password);
   } catch (error) {
-    passwordOutput.textContent = "Secure generation unavailable";
+    passwordOutput.value = "Secure generation unavailable";
     copyStatus.textContent = error.message;
     strengthMeter.className = "strength-meter weak";
     [...strengthMeter.children].forEach((segment, index) => {
@@ -128,7 +137,7 @@ function refreshPassword() {
 }
 
 async function copyPassword() {
-  const password = passwordOutput.textContent;
+  const password = passwordOutput.value;
 
   if (!password || password === "Secure generation unavailable") {
     copyStatus.textContent = "Generate a password before copying.";
@@ -159,6 +168,10 @@ async function copyPassword() {
 generateButton.addEventListener("click", refreshPassword);
 copyButton.addEventListener("click", copyPassword);
 lengthInput.addEventListener("input", refreshPassword);
+passwordOutput.addEventListener("input", () => {
+  copyStatus.textContent = "";
+  renderStrength(passwordOutput.value);
+});
 optionInputs.forEach((input) => input.addEventListener("change", refreshPassword));
 
 refreshPassword();

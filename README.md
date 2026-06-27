@@ -4,7 +4,7 @@ A small static password generator app with:
 
 - Secure random password generation
 - Length control from 4 to 64 characters
-- Uppercase, lowercase, number, and symbol options
+- Uppercase, lowercase, number, and number-row symbol options
 - Strength feedback
 - Clipboard copy support
 

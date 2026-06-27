@@ -18,7 +18,14 @@
           <section class="password-section" aria-label="Generated password">
             <label for="password-output">Generated Password</label>
             <div class="password-row">
-              <output id="password-output" class="password-output" aria-live="polite" tabindex="0"></output>
+              <input
+                id="password-output"
+                class="password-output"
+                type="text"
+                aria-live="polite"
+                spellcheck="false"
+                autocomplete="off"
+              />
               <button id="generate-button" class="button button-primary" type="button">
                 <svg aria-hidden="true" viewBox="0 0 24 24">
                   <path d="M20 11a8 8 0 1 0-2.34 5.66" />
@@ -79,7 +86,7 @@
                   <span class="checkmark" aria-hidden="true"></span>
                   <span>
                     <strong>!@#</strong>
-                    Symbols (!@#$%)
+                    Number-row symbols (!@#$%^&*())
                   </span>
                 </label>
               </div>
