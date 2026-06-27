@@ -93,9 +93,9 @@ function scorePassword(password) {
 
   if (length >= 8) score += 1;
   if (length >= 12) score += 1;
-  if (length >= 18) score += 1;
+  if (length >= 12) score += 1;
   if (variety >= 3) score += 1;
-  if (variety === 4 && length >= 16) score += 1;
+  if (variety === 4 && length >= 12) score += 1;
 
   return Math.max(1, Math.min(5, score));
 }
