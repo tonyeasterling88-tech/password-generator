@@ -12,15 +12,23 @@ await cp(join(root, "styles.css"), join(client, "styles.css"), { recursive: fals
 await cp(join(root, "script.js"), join(client, "script.js"), { recursive: false });
 await cp(join(root, "icons"), join(client, "icons"), { recursive: true });
 
-const worker = `export default {
+const worker = `function withSecurityHeaders(response) {
+  const headers = new Headers(response.headers);
+  headers.set("X-Content-Type-Options", "nosniff");
+  headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
+export default {
   async fetch(request, env) {
     const response = await env.ASSETS.fetch(request);
-    if (response.status !== 404 || request.method !== "GET") return response;
+    if (response.status !== 404 || request.method !== "GET") return withSecurityHeaders(response);
 
     const acceptsHtml = (request.headers.get("Accept") || "").includes("text/html");
-    return acceptsHtml
+    const fallback = acceptsHtml
       ? env.ASSETS.fetch(new Request(new URL("/", request.url), request))
       : response;
+    return withSecurityHeaders(await fallback);
   },
 };
 `;
