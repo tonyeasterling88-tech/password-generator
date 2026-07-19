@@ -19,6 +19,14 @@
   min-width: 0;
 }
 
+html.extension-popup {
+  width: 760px;
+  min-width: 760px;
+  height: 600px;
+  min-height: 600px;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -354,6 +362,71 @@ fieldset {
   .option-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+.extension-popup body {
+  width: 760px;
+  min-width: 760px;
+  height: 600px;
+  overflow-y: auto;
+  background: var(--panel);
+}
+
+.extension-popup .app-shell {
+  min-height: auto;
+  padding: 0;
+}
+
+.extension-popup .generator {
+  width: 760px;
+  min-width: 760px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.extension-popup .masthead {
+  padding: 14px 24px 16px;
+}
+
+.extension-popup .masthead h1 {
+  font-size: 1.8rem;
+}
+
+.extension-popup .masthead p {
+  font-size: 1rem;
+}
+
+.extension-popup .content {
+  padding: 22px 24px;
+}
+
+.extension-popup .password-output,
+.extension-popup .button {
+  min-height: 58px;
+}
+
+.extension-popup .button {
+  padding: 0 18px;
+}
+
+.extension-popup .option-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.extension-popup .option-card {
+  min-height: 82px;
+  padding: 14px 12px;
+  gap: 10px;
+}
+
+.extension-popup .option-card strong {
+  font-size: 1.2rem;
+}
+
+.extension-popup .strength-section {
+  margin-top: 24px;
 }
 
 @media (max-width: 520px) {

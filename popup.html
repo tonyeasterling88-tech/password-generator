@@ -1,0 +1,120 @@
+<!doctype html>
+<html class="extension-popup" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="generator" aria-labelledby="app-title">
+        <header class="masthead">
+          <h1 id="app-title">Password Generator</h1>
+          <p>Create strong, random passwords for your accounts.</p>
+        </header>
+
+        <div class="content">
+          <section class="password-section" aria-label="Generated password">
+            <label for="password-output">Generated Password</label>
+            <div class="password-row">
+              <input
+                id="password-output"
+                class="password-output"
+                type="text"
+                aria-live="polite"
+                spellcheck="false"
+                autocomplete="off"
+              />
+              <button id="generate-button" class="button button-primary" type="button">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="M20 11a8 8 0 1 0-2.34 5.66" />
+                  <path d="M20 5v6h-6" />
+                </svg>
+                Generate
+              </button>
+              <button id="copy-button" class="button button-secondary" type="button">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="10" height="10" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" />
+                </svg>
+                Copy
+              </button>
+            </div>
+            <p id="copy-status" class="copy-status" aria-live="polite"></p>
+          </section>
+
+          <section class="control-section" aria-label="Password options">
+            <div class="length-header">
+              <label for="length">Password Length: <strong id="length-value">20</strong></label>
+            </div>
+            <input id="length" type="range" min="4" max="64" value="20" />
+            <div class="range-labels" aria-hidden="true">
+              <span>4</span>
+              <span>64</span>
+            </div>
+
+            <fieldset>
+              <legend>Include Characters</legend>
+              <div class="option-grid">
+                <label class="option-card">
+                  <input type="checkbox" id="uppercase" checked />
+                  <span class="checkmark" aria-hidden="true"></span>
+                  <span>
+                    <strong>Aa</strong>
+                    Uppercase (A-Z)
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="checkbox" id="lowercase" checked />
+                  <span class="checkmark" aria-hidden="true"></span>
+                  <span>
+                    <strong>aa</strong>
+                    Lowercase (a-z)
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="checkbox" id="numbers" checked />
+                  <span class="checkmark" aria-hidden="true"></span>
+                  <span>
+                    <strong>123</strong>
+                    Numbers (0-9)
+                  </span>
+                </label>
+                <label class="option-card">
+                  <input type="checkbox" id="symbols" checked />
+                  <span class="checkmark" aria-hidden="true"></span>
+                  <span>
+                    <strong>!@#</strong>
+                    Number-row symbols (!@#$%^&*())
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="strength-section" aria-label="Password strength">
+            <h2>Password Strength</h2>
+            <div id="strength-meter" class="strength-meter" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="strength-copy">
+              <svg class="shield" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M12 3 19 6v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3Z" />
+                <path d="m9 12 2 2 4-5" />
+              </svg>
+              <strong id="strength-label">Strong</strong>
+              <span id="strength-note">Your password is strong. Great job.</span>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

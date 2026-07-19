@@ -16,6 +16,10 @@ const strengthLabel = document.querySelector("#strength-label");
 const strengthNote = document.querySelector("#strength-note");
 const optionInputs = [...document.querySelectorAll(".option-card input")];
 
+if (globalThis.chrome?.runtime?.id) {
+  document.documentElement.classList.add("extension-popup");
+}
+
 function secureRandomUint32() {
   if (!globalThis.crypto?.getRandomValues) {
     throw new Error("Secure random generation is not available in this browser.");

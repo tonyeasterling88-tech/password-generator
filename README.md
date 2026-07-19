@@ -15,3 +15,12 @@ python -m http.server 8766
 ```
 
 Then open `http://127.0.0.1:8766/`.
+
+## Chrome Extension
+
+1. Open `chrome://extensions`.
+2. Turn on Developer Mode.
+3. Choose **Load unpacked**.
+4. Select this project folder.
+
+The generator will open from the Chrome toolbar as a wide popup.
