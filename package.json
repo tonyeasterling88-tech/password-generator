@@ -5,6 +5,6 @@
   "description": "A small static password generator app.",
   "scripts": {
     "start": "python -m http.server 8766",
-    "build": "echo Static app ready"
+    "build": "node scripts/build-sites.mjs"
   }
 }
